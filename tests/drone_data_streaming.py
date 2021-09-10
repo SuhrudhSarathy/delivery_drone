@@ -16,20 +16,20 @@ class MyDrone:
         self.drone.takeoff()
 
     def __init__stream__(self):
-        # Initialises stream and shows it in a OpenCV Window
-        self.stream_obj = self.drone.get_frame_read()
-
-        self.data_thread = Thread(target=self.show_video)
+        self.data_thread = Thread(target=self.log_data)
         self.data_thread.start()
 
     def log_data(self):
-        with open(self.logfile, "a") as file:
-            string = f"""Battery: {self.drone.get_battery()}, Velocity: {self.drone.get_speed_x} {self.drone.get_speed_y} {self.drone.get_speed_z}
-            Acceleration: {self.drone.get_acceleration_x} {self.drone.get_acceleration_y} {self.drone.get_acceleration_z}, Altitude: {self.drone.get_height}
-            ---
-            """
-            file.write(string)
-
+        try:
+            with open(self.logfile, "a") as file:
+                string = f"""Battery: {self.drone.get_battery()}, Velocity: {self.drone.get_speed_x} {self.drone.get_speed_y} {self.drone.get_speed_z}
+                Acceleration: {self.drone.get_acceleration_x} {self.drone.get_acceleration_y} {self.drone.get_acceleration_z}, Altitude: {self.drone.get_height}
+                ---
+                """
+                file.write(string)
+        except KeyboardInterrupt as e:
+            # Stop the thread
+            self.land()
 
     def land(self):
         """Shut down all the threads and Land calmly"""
