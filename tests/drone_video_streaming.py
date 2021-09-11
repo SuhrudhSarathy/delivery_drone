@@ -11,9 +11,10 @@ class MyDrone:
         self.drone.connect()
 
         if self.camera_enabled:
+            self.drone.streamon()
             self.__init__stream__()
 
-        self.drone.takeoff()
+        # self.drone.takeoff()
 
     def __init__stream__(self):
         # Initialises stream and shows it in a OpenCV Window
@@ -26,7 +27,7 @@ class MyDrone:
     def show_video(self):
         while self.keep_showing:
             frame = self.stream_obj.frame
-
+            print(frame)
             cv2.imshow("Drone Stream", frame)
 
             if cv2.waitKey(1) == 0 and 0xFF == ord("q"):
@@ -37,7 +38,7 @@ class MyDrone:
     def land(self):
         """Shut down all the threads and Land calmly"""
 
-        self.drone.land()
+        # self.drone.land()
         self.video_thread.join()
 
         print("Terminated Perfectly")
