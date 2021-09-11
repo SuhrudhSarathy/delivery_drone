@@ -21,3 +21,4 @@ Depends on the [DJITelloPy](https://github.com/damiafuentes/DJITelloPy) Reposito
 
 ## Troubleshooting
 1. In case of an `invalid imu` error, consider waiting till the next day morning 😜. The error is mostly caused by not enough lighting for the drone to figure out where it is.
+2. If the drone doesn't perform a manuever and lands unexpectedly, you are done for an hour. Go charge the battery first.
