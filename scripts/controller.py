@@ -3,7 +3,7 @@ from djitellopy import Tello
 from time import sleep
 
 class TelloController:
-    def __init__(self, drone: Tello, **kwargs):
+    def __init__(self, drone: Tello):
         """Main Controller Class
         The main objective of the class is to function as a waypoint to waypoint controller using the Tello's internal
         move commands or the go commands
@@ -16,8 +16,8 @@ class TelloController:
         # Connect to the Tello and takeoff on initialisation
 
         self.drone.connect()
-        self.speed = kwargs["speed"]
-        self.safe_altitude = kwargs["safe_altitude"]
+        self.speed = 100
+        self.safe_altitude = 50
         
         # Data collection from the Drone
         self.velocity = [0, 0, 0]
@@ -29,7 +29,8 @@ class TelloController:
         self.state = "Armed"
 
         # Start a thread to update the recent data
-        self.data_thread = Thread(target=self.__get_data__())
+        # self.data_thread = Thread(target=self.__get_data__())
+        
 
     def __get_data__(self):
         """Function to get data from the drone. This will run on a different thread.
@@ -56,12 +57,13 @@ class TelloController:
         try:
             for waypoint in waypoints:
                 print(f"Going to Waypoint {waypoint[0]}, {waypoint[1]}, {waypoint[2]}")
-                self.drone.go_xyz_speed(*waypoint, self.safe_altitude)
+                self.drone.go_xyz_speed(waypoint[0], waypoint[1], waypoint[2], self.speed)
 
             return True
 
         except Exception as e:
             # Go to a safety function
+            print(e)
             self.safety_function()
             return False
 
@@ -72,18 +74,11 @@ class TelloController:
         """Function that takes the Drone off and will make it ready for executing poses"""
 
         # Start the data collection thread
-        self.data_thread.start()
+        # self.data_thread.start()
         sleep(1)
 
         # Takeoff
-        if self.battery > 35:
-            self.drone.takeoff()
-        else:
-            # Check if the data is getting updated or not
-            if self.acceleration != [0, 0, 0]:
-                raise Exception(f"Battery is {self.battery}. Cannot takeoff if battery less than 35")
-            else:
-                raise Exception(f"Data Not being updated..")
+        self.drone.takeoff()
 
         sleep(1)
 

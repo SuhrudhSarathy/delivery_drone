@@ -13,28 +13,28 @@ drone.takeoff()
 
 # Move Forward 75 cm
 drone.move_forward(75)
-sleep(5)
+sleep(2)
 
 # Move back 75 cm
 drone.move_back(75)
-sleep(5)
+sleep(2)
 
-# Move left and come back
-# Move Left
-drone.move_left(75)
-sleep(5)
+# # Move left and come back
+# # Move Left
+# drone.move_left(75)
+# sleep(2)
 
-# Move right
-drone.move_right(75)
-sleep(5)
+# # Move right
+# drone.move_right(75)
+# sleep(2)
 
-# Move up 100 cm
-drone.move_up(100)
-sleep(5)
+# # Move up 100 cm
+# drone.move_up(100)
+# sleep(2)
 
-# Move down 100 cm
-drone.move_down(100)
-sleep(5)
+# # Move down 100 cm
+# drone.move_down(100)
+# sleep(2)
 
 drone.land()
 

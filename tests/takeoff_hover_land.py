@@ -11,7 +11,7 @@ drone.connect()
 drone.takeoff()
 
 # Hover for 15 seconds
-sleep(15)
+sleep(5)
 
 # Land
 drone.land()
